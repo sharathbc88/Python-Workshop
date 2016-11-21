@@ -11,7 +11,7 @@ count = 0
 Total_shipping_cost = 0
 if quantity >0:
     while quantity != count:
-        shipping_cost = float(input("Enter the shipping cost of item:"))
+        shipping_cost = float(input("Enter the shipping cost of item %s:"%(count+1)))
         count = count + 1
         Total_shipping_cost = shipping_cost + Total_shipping_cost
     if Total_shipping_cost > 100:
@@ -21,4 +21,4 @@ if quantity >0:
         print ("Total_shipping_cost:%s"% (Total_shipping_cost))
 else:
     print ("Invalid number of items!")
-    quantity = int(input("Enter quantity in numbers: "))
+    quantity = int(input("Enter quantity in positive numbers: "))
