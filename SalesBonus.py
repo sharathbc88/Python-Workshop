@@ -10,7 +10,7 @@ sales = float(input("Enter Sales: $"))
 if sales < 1000:
     bonus = sales * 0.1
     print("Bonus: $",(bonus))
-elif sales > 1000:
+else:
     bonus = sales * 0.15
     print("Bonus: $",(bonus))
 else:
