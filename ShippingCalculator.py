@@ -5,7 +5,6 @@ Then the program computes and displays the total shipping cost.
 If the total shipping cost is over $100, then a 10% discount is applied to the total shipping cost before
 the amount is displayed on the screen."""
 
-
 quantity = int(input("Enter quantity in numbers: "))
 count = 0
 Total_shipping_cost = 0
