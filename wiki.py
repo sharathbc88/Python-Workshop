@@ -9,7 +9,7 @@ in_file = open(" ", "r")
 
 
 in_file.close()
-"""
+
 flag = True
 while(flag):
     try:
@@ -23,4 +23,12 @@ while(flag):
         flag = False
     except FileNotFoundError:
         print("enter a valid filename")
+
+"""
+def get_number(lower, upper):
+    print("Enter a number ({}-{}):".format(lower, upper))
+
+
+get_number(10, 50)
+
 
