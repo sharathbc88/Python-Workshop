@@ -25,10 +25,8 @@ while(flag):
         print("enter a valid filename")
 
 """
-def get_number(lower, upper):
-    print("Enter a number ({}-{}):".format(lower, upper))
 
-
-get_number(10, 50)
-
+def func_2():
+    x = 2 + 3
+    return x
 
