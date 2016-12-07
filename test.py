@@ -21,3 +21,32 @@ def displayResults(num1, num2):
     print (str(num1) + " to the power of " + str(num2) + " is " + str(num1 ** num2))
 print(4)
 main()
+
+"""
+def getuserlogin(prompt):
+    username= input(prompt)
+    return username
+
+x = input('sbc')
+
+
+count = 0
+vowels = ["a","i","e","o","u"]
+name = input("Enter ur name already :").lower()
+for each in name:
+    if each in vowels:
+        count+=1
+
+print("out of {} letters, {} has {} vowels".format(len(name),name,count))
+
+
+
+number = int(input("tell me the number already: "))
+
+def get_day(number):
+    days = ["sun", "mon", "tue", "wed", "thur", "fri", "sat"]
+    return days[number]
+
+get_day(number)
+print(get_day(number))
+"""

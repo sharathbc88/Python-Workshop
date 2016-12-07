@@ -25,8 +25,6 @@ while(flag):
         print("enter a valid filename")
 
 """
-
-def func_2():
-    x = 2 + 3
-    return x
+a = 1,2,3
+print(a)
 
