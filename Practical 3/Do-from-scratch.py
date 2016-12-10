@@ -21,17 +21,20 @@ def convert_fahrenheit_to_celsius(fahrenheit):
 MENU = "C - Convert Celsius to Fahrenheit\nF - Convert Fahrenheit to Celsius\nQ (for quit)"
 print(MENU)
 choice = input(">>> ").upper()
-temperature = float(input("Enter temperature:"))
+
 
 while choice != "Q":
     if choice == "C":
+        temperature = float(input("Enter temperature:"))
         convert_celsius_to_fahrenheit(temperature)
     elif choice == "F":
+        temperature = float(input("Enter temperature:"))
         convert_fahrenheit_to_celsius(temperature)
     else:
         print("Invalid option")
     print(MENU)
     choice = input(">>> ").upper()
+    temperature = float(input("Enter temperature:"))
 print("Thank you.")
 
 
