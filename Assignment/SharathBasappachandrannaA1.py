@@ -51,7 +51,15 @@ def savedetailstocsvfile(filename, itemlist):
                 line = '{},{},{},{}\n'.format(itemlist[i][0], itemlist[i][1], itemlist[i][2], itemlist[i][3])
                 f.write(line)
     except FileNotFoundError:
-        print('Error occured while saving details back to {} file.\n'.format(filename))
+        print('Error occurred while saving details back to {} file.\n'.format(filename))
 
 
 savedetailstocsvfile(FILENAME,itemlist)
+print("Required books:")
+total=0
+for i in range(len(itemlist)):
+    if 'r' in itemlist[i][3]:
+        record = ' {}. {} by {} {} pages'.format(i, (itemlist[i][0]).ljust(40), (itemlist[i][1]).ljust(20),itemlist[i][2])
+        print(record)
+        total = total + int(itemlist[i][2])
+print("Total pages for {} books: {}".format(i,total))
