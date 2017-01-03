@@ -43,6 +43,7 @@ itemlist = readdetailsfromcsvfile(FILENAME)
 
 # write details to csv file
 def savedetailstocsvfile(filename, itemlist):
+    x = len(itemlist)
     try:
         with open(filename, 'w') as f:
             for i in range(len(itemlist)):
@@ -50,6 +51,7 @@ def savedetailstocsvfile(filename, itemlist):
                 f.write(line)
     except FileNotFoundError:
         print('Error occurred while saving details back to {} file.\n'.format(filename))
+    print("{} books saved to {}".format(x, filename))
 
 
 
@@ -139,8 +141,8 @@ def main():
             markasrequired()
         else:
             savedetailstocsvfile(FILENAME, itemlist)
-            print("")
             print("Have a nice day :)")
+            break
 
 main()
 
