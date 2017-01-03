@@ -1,4 +1,4 @@
-print("Welcome Sharath Basappa Chandranna")
+print("Reading List 1.0 -by Sharath Basappa Chandranna")
 FILENAME = 'Books.csv'
 
 
@@ -36,6 +36,7 @@ def readdetailsfromcsvfile(filename):
         print('Missing {} file, or missmatching file format.'.format(filename))
     import operator
     itemlist = sorted(itemlist, key=operator.itemgetter(1,2))
+    print("{} books loaded from {}".format(len(itemlist),filename))
     return itemlist
 
 
@@ -85,9 +86,9 @@ def completedbooks():
 
 #display M - Mark a book as completed
 def markasrequired():
+    requiredbooks()
     try:
         record_number = int(input("Enter the number of a book to mark as completed \n>>> "))
-        print(itemlist[record_number][3])
     except ValueError:
         while (True):
             try:
@@ -102,7 +103,7 @@ def markasrequired():
         print("That book is already completed")
     elif 'c' not in itemlist[record_number][3]:
         itemlist[record_number][3]='c'
-        print(itemlist[record_number])
+        print("{} by {} marked as completed".format(itemlist[record_number][0],itemlist[record_number][0]))
 
 
 # display A - Add new book
