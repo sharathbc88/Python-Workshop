@@ -3,21 +3,15 @@ FILENAME = 'Books.csv'
 
 
 def displaymenu():
-    menutext ="""Menu:
-    R - List required books
-    C - List completed books
-    A - Add new book
-    M - Mark a book as completed
-    Q - Quit
-    Enter an option:  """
+    MENUTEXT ="Menu:\nR - List required books\nC - List completed books\nA - Add new book\nM - Mark a book as completed\nQ - Quit\n>>> "
 
     # Get user input
-    user_input = (input(menutext)).upper()
+    user_input = (input(MENUTEXT)).upper()
 
     # Input checking
     while user_input not in ('R', 'C', 'A', 'M', 'Q'):
         print("Invalid menu choice")
-        user_input = input(menutext)
+        user_input = input(MENUTEXT)
         user_input = user_input.upper()
 
     return user_input
@@ -52,7 +46,7 @@ def savedetailstocsvfile(filename, itemlist):
                 f.write(line)
     except FileNotFoundError:
         print('Error occurred while saving details back to {} file.\n'.format(filename))
-    print("{} books saved to {}".format(x, filename))
+
 
 
 
@@ -116,6 +110,7 @@ def markasrequired():
             print("That book is already completed")
         elif 'c' not in itemlist[record_number][3]:
             itemlist[record_number][3]='c'
+            savedetailstocsvfile(FILENAME, itemlist)
             print("{} by {} marked as completed".format(itemlist[record_number][0],itemlist[record_number][0]))
     else:
         print("No required books")
@@ -133,14 +128,20 @@ def addingnewbook():
     while author == '':
         print("Input can not be blank")
         author = str(input("Author:"))
-
-    pages = int(input("Pages:"))
-    while pages < 0:
-        print("Number must be >= 0")
-        pages = int(input("Pages:"))
-    newitem = [title,author,pages,'r']
-    itemlist.append(newitem)
-    print("{} by {}, ({} pages) added to the reading list".format(title,author,pages))
+    while True:
+        try:
+            pages = int(input("Pages:"))
+            while pages < 0:
+                print("Number must be >= 0")
+                pages = int(input("Pages:"))
+            newitem = [title,author,pages,'r']
+            itemlist.append(newitem)
+            savedetailstocsvfile(FILENAME, itemlist)
+            print("{} by {}, ({} pages) added to the reading list".format(title,author,pages))
+            break
+        except ValueError:
+            print("Invalid input; enter a valid number")
+            continue
 
 
 
@@ -159,6 +160,7 @@ def main():
             markasrequired()
         else:
             savedetailstocsvfile(FILENAME, itemlist)
+            print("{} books saved to {}".format(len(itemlist), FILENAME))
             print("Have a nice day :)")
             break
 
