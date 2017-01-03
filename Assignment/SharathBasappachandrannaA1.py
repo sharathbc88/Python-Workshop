@@ -16,6 +16,7 @@ def displaymenu():
 
     # Input checking
     while user_input not in ('R', 'C', 'A', 'M', 'Q'):
+        print("Invalid menu choice")
         user_input = input(menutext)
         user_input = user_input.upper()
 
@@ -23,24 +24,21 @@ def displaymenu():
 
 # read details from csv file
 def readdetailsfromcsvfile(filename):
-    # declare item list
+    # declare record list
     itemlist = []
 
     try:
         with open(filename, 'r') as f:
             for line in f:
-                if len(line) == 0:
-                    continue
-                else:
-                    fields = line.rstrip('\n').split(',')
-                    itemlist.append([fields[0], fields[1], fields[2], fields[3]])
+                fields = line.rstrip('\n').split(',')
+                itemlist.append([fields[0], fields[1], fields[2], fields[3]])
     except FileNotFoundError:
         print('Missing {} file, or missmatching file format.'.format(filename))
     import operator
-    itemlist = sorted(itemlist, key=operator.itemgetter(1, 2),reverse=True)
+    itemlist = sorted(itemlist, key=operator.itemgetter(1,2))
     return itemlist
 
-readdetailsfromcsvfile(FILENAME)
+
 itemlist = readdetailsfromcsvfile(FILENAME)
 
 # write details to csv file
@@ -54,12 +52,96 @@ def savedetailstocsvfile(filename, itemlist):
         print('Error occurred while saving details back to {} file.\n'.format(filename))
 
 
-savedetailstocsvfile(FILENAME,itemlist)
-print("Required books:")
-total=0
-for i in range(len(itemlist)):
-    if 'r' in itemlist[i][3]:
-        record = ' {}. {} by {} {} pages'.format(i, (itemlist[i][0]).ljust(40), (itemlist[i][1]).ljust(20),itemlist[i][2])
-        print(record)
-        total = total + int(itemlist[i][2])
-print("Total pages for {} books: {}".format(i,total))
+
+#display R - List required books
+def requiredbooks():
+    print("Required books:")
+    total=0
+    count=0
+    for i in range(len(itemlist)):
+        if 'r' in itemlist[i][3]:
+            record = ' {}. {} by {} {} pages'.format(i, (itemlist[i][0]).ljust(40), (itemlist[i][1]).ljust(20),itemlist[i][2])
+            print(record)
+            total = total + int(itemlist[i][2])
+            count = count + 1
+    print("Total pages for {} books: {}".format(count,total))
+
+
+#Display C - List completed books
+def completedbooks():
+    print("Completed books:")
+    total=0
+    count=0
+    for i in range(len(itemlist)):
+        if 'c' in itemlist[i][3]:
+            record = ' {}. {} by {} {} pages'.format(i, (itemlist[i][0]).ljust(40), (itemlist[i][1]).ljust(20),itemlist[i][2])
+            print(record)
+            total = total + int(itemlist[i][2])
+            count = count + 1
+    print("Total pages for {} books: {}".format(count,total))
+
+
+#display M - Mark a book as completed
+def markasrequired():
+    try:
+        record_number = int(input("Enter the number of a book to mark as completed \n>>> "))
+        print(itemlist[record_number][3])
+    except ValueError:
+        while (True):
+            try:
+                record_number = input("Invalid input; enter a valid number\n>>> ")
+                if record_number.isdigit():
+                    break
+            except ValueError:
+                continue
+    record_number=int(record_number)
+
+    if 'c' in itemlist[record_number][3]:
+        print("That book is already completed")
+    elif 'c' not in itemlist[record_number][3]:
+        itemlist[record_number][3]='c'
+        print(itemlist[record_number])
+
+
+# display A - Add new book
+def addingnewbook():
+    newitem =[]
+    title = str(input("Title:"))
+    while title == '':
+        print("Input can not be blank")
+        title = str(input("Title:"))
+
+    author = str(input("Author:"))
+    while author == '':
+        print("Input can not be blank")
+        author = str(input("Author:"))
+
+    pages = int(input("Pages:"))
+    while pages < 0:
+        print("Number must be >= 0")
+        pages = int(input("Pages:"))
+    newitem = [title,author,pages,'r']
+    itemlist.append(newitem)
+    print("{} by {}, ({} pages) added to the reading list".format(title,author,pages))
+
+
+
+def main():
+    while True:
+        valid_input = displaymenu()
+        if valid_input == 'R':
+            requiredbooks()
+        elif valid_input == 'C':
+            completedbooks()
+        elif valid_input == 'A':
+            addingnewbook()
+        elif valid_input == 'M':
+            markasrequired()
+        else:
+            savedetailstocsvfile(FILENAME, itemlist)
+            print("")
+            print("Have a nice day :)")
+
+main()
+
+
