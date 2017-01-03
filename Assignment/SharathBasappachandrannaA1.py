@@ -36,11 +36,11 @@ def readdetailsfromcsvfile(filename):
         print('Missing {} file, or missmatching file format.'.format(filename))
     import operator
     itemlist = sorted(itemlist, key=operator.itemgetter(1,2))
-    print("{} books loaded from {}".format(len(itemlist),filename))
+
     return itemlist
 
 
-itemlist = readdetailsfromcsvfile(FILENAME)
+
 
 # write details to csv file
 def savedetailstocsvfile(filename, itemlist):
@@ -61,6 +61,7 @@ def requiredbooks():
     print("Required books:")
     total=0
     count=0
+    itemlist = readdetailsfromcsvfile(FILENAME)
     for i in range(len(itemlist)):
         if 'r' in itemlist[i][3]:
             record = ' {}. {} by {} {} pages'.format(i, (itemlist[i][0]).ljust(40), (itemlist[i][1]).ljust(20),itemlist[i][2])
@@ -78,6 +79,7 @@ def completedbooks():
     print("Completed books:")
     total=0
     count=0
+    itemlist = readdetailsfromcsvfile(FILENAME)
     for i in range(len(itemlist)):
         if 'c' in itemlist[i][3]:
             record = ' {}. {} by {} {} pages'.format(i, (itemlist[i][0]).ljust(40), (itemlist[i][1]).ljust(20),itemlist[i][2])
@@ -90,6 +92,7 @@ def completedbooks():
 #display M - Mark a book as completed
 def markasrequired():
     count = 0
+    itemlist = readdetailsfromcsvfile(FILENAME)
     for i in range(len(itemlist)):
         if 'r' in itemlist[i][3]:
             count += 1
@@ -120,6 +123,7 @@ def markasrequired():
 # display A - Add new book
 def addingnewbook():
     newitem =[]
+    itemlist = readdetailsfromcsvfile(FILENAME)
     title = str(input("Title:"))
     while title == '':
         print("Input can not be blank")
@@ -141,6 +145,8 @@ def addingnewbook():
 
 
 def main():
+    itemlist = readdetailsfromcsvfile(FILENAME)
+    print("{} books loaded from {}".format(len(itemlist), FILENAME))
     while True:
         valid_input = displaymenu()
         if valid_input == 'R':
