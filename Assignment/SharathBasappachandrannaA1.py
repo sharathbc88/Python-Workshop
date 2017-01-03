@@ -67,7 +67,10 @@ def requiredbooks():
             print(record)
             total = total + int(itemlist[i][2])
             count = count + 1
-    print("Total pages for {} books: {}".format(count,total))
+    if count > 0:
+        print("Total pages for {} books: {}".format(count,total))
+    else:
+        print("No books")
 
 
 #Display C - List completed books
@@ -86,25 +89,33 @@ def completedbooks():
 
 #display M - Mark a book as completed
 def markasrequired():
-    requiredbooks()
-    try:
-        record_number = int(input("Enter the number of a book to mark as completed \n>>> "))
-    except ValueError:
-        while (True):
-            try:
-                record_number = input("Invalid input; enter a valid number\n>>> ")
-                if record_number.isdigit():
-                    break
-            except ValueError:
-                continue
-    record_number=int(record_number)
+    count = 0
+    for i in range(len(itemlist)):
+        if 'r' in itemlist[i][3]:
+            count += 1
 
-    if 'c' in itemlist[record_number][3]:
-        print("That book is already completed")
-    elif 'c' not in itemlist[record_number][3]:
-        itemlist[record_number][3]='c'
-        print("{} by {} marked as completed".format(itemlist[record_number][0],itemlist[record_number][0]))
+    if count >0:
+        requiredbooks()
 
+        try:
+            record_number = int(input("Enter the number of a book to mark as completed \n>>> "))
+        except ValueError:
+            while (True):
+                try:
+                    record_number = input("Invalid input; enter a valid number\n>>> ")
+                    if record_number.isdigit():
+                        break
+                except ValueError:
+                    continue
+        record_number=int(record_number)
+
+        if 'c' in itemlist[record_number][3]:
+            print("That book is already completed")
+        elif 'c' not in itemlist[record_number][3]:
+            itemlist[record_number][3]='c'
+            print("{} by {} marked as completed".format(itemlist[record_number][0],itemlist[record_number][0]))
+    else:
+        print("No required books")
 
 # display A - Add new book
 def addingnewbook():
