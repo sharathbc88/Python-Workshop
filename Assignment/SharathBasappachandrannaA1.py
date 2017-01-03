@@ -112,6 +112,7 @@ def markasrequired():
             itemlist[record_number][3]='c'
             savedetailstocsvfile(FILENAME, itemlist)
             print("{} by {} marked as completed".format(itemlist[record_number][0],itemlist[record_number][0]))
+            print(itemlist)
     else:
         print("No required books")
 
@@ -144,10 +145,12 @@ def addingnewbook():
             continue
 
 
-
-def main():
+def introduction():
     itemlist = readdetailsfromcsvfile(FILENAME)
     print("{} books loaded from {}".format(len(itemlist), FILENAME))
+
+def main():
+
     while True:
         valid_input = displaymenu()
         if valid_input == 'R':
@@ -159,6 +162,7 @@ def main():
         elif valid_input == 'M':
             markasrequired()
         else:
+            itemlist = readdetailsfromcsvfile(FILENAME)
             savedetailstocsvfile(FILENAME, itemlist)
             print("{} books saved to {}".format(len(itemlist), FILENAME))
             print("Have a nice day :)")
