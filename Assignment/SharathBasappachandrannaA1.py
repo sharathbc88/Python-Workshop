@@ -1,7 +1,7 @@
 print("Reading List 1.0 -by Sharath Basappa Chandranna")
 FILENAME = 'Books.csv'
 
-
+# displays options and check correctness of the input
 def displaymenu():
     MENUTEXT ="Menu:\nR - List required books\nC - List completed books\nA - Add new book\nM - Mark a book as completed\nQ - Quit\n>>> "
 
@@ -16,8 +16,15 @@ def displaymenu():
 
     return user_input
 
+
+
 # read details from csv file
 def readdetailsfromcsvfile(filename):
+    """
+        The 'readdetailsfromcsvfile' is  a user defined function that reads details from the CSV file.
+        :param filename: Name of the file
+        :return: list of records
+    """
     # declare record list
     itemlist = []
 
@@ -36,8 +43,15 @@ def readdetailsfromcsvfile(filename):
 
 
 
+
 # write details to csv file
 def savedetailstocsvfile(filename, itemlist):
+    """
+        The 'savedetailstocsvfile' is  a user defined function that reads details from the CSV file.
+        :param filename: Name of the file
+        :param itemlist: variable list
+        :return: list of records
+        """
     x = len(itemlist)
     try:
         with open(filename, 'w') as f:
@@ -66,6 +80,7 @@ def requiredbooks():
         print("Total pages for {} books: {}".format(count,total))
     else:
         print("No books")
+
 
 
 #Display C - List completed books
@@ -112,7 +127,7 @@ def markasrequired():
             itemlist[record_number][3]='c'
             savedetailstocsvfile(FILENAME, itemlist)
             print("{} by {} marked as completed".format(itemlist[record_number][0],itemlist[record_number][0]))
-            print(itemlist)
+
     else:
         print("No required books")
 
@@ -168,6 +183,10 @@ def main():
             print("Have a nice day :)")
             break
 
+#print(readdetailsfromcsvfile.__doc__)
+#print(savedetailstocsvfile.__doc__)
 main()
+
+
 
 
