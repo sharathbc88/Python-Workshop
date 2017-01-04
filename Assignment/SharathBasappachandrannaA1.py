@@ -30,7 +30,7 @@ def readdetailsfromcsvfile(filename):
     itemlist = []
 
     try:
-        with open(filename, 'r') as f:
+        with open(filename, 'r') as f: # open file
             for line in f:
                 fields = line.rstrip('\n').split(',')
                 itemlist.append([fields[0], fields[1], fields[2], fields[3]])
@@ -43,14 +43,14 @@ def readdetailsfromcsvfile(filename):
 
 
 # write details to csv file
-def savedetailstocsvfile(filename, itemlist):
+def saveDetailstoCsvFile(filename, itemlist):
     """
-        The 'savedetailstocsvfile' is  a user defined function that reads details from the CSV file.
+        The 'savedetailstocsvfile' is  a user defined function that saves details to the CSV file.
         :param filename: Name of the file
         :param itemlist: variable list
-        :return: list of records
+        records of books are written to the file
         """
-    x = len(itemlist)
+
     try:
         with open(filename, 'w') as f:
             for i in range(len(itemlist)):
@@ -58,7 +58,8 @@ def savedetailstocsvfile(filename, itemlist):
                 f.write(line)
     except FileNotFoundError:
         print('Error occurred while saving details back to {} file.\n'.format(filename))
-
+    import operator
+    itemlist = sorted(itemlist, key=operator.itemgetter(1, 2))
 
 
 
@@ -136,7 +137,7 @@ def markasrequired():
             print("That book is already completed")
         elif 'c' not in itemlist[record_number][3]:
             itemlist[record_number][3]='c'
-            savedetailstocsvfile(FILENAME, itemlist)
+            saveDetailstoCsvFile(FILENAME, itemlist)
             print("{} by {} marked as completed".format(itemlist[record_number][0],itemlist[record_number][0]))
 
     else:
@@ -207,13 +208,13 @@ def main():
         else:
             itemlist = readdetailsfromcsvfile(FILENAME)
             itemlist.append(added_record)
-            savedetailstocsvfile(FILENAME, itemlist)
+            saveDetailstoCsvFile(FILENAME, itemlist)
             print("{} books saved to {}".format(len(itemlist), FILENAME))
             print("Have a nice day :)")
             break
 
-#print(readdetailsfromcsvfile.__doc__)
-#print(savedetailstocsvfile.__doc__)
+print(readdetailsfromcsvfile.__doc__)
+print(saveDetailstoCsvFile.__doc__)
 main()
 
 
