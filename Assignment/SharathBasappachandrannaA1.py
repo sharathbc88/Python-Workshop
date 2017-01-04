@@ -17,7 +17,7 @@ FILENAME = 'Books.csv'
 
 # displays options and check correctness of the input
 #	return to the menu after each action and loop until the user chooses to quit
-def displaymenu():
+def display_menu():
     MENUTEXT ="Menu:\nR - List required books\nC - List completed books\nA - Add new book\nM - Mark a book as completed\nQ - Quit\n>>> "
 
     # Get user input
@@ -34,22 +34,22 @@ def displaymenu():
 
 #	load a CSV (Comma Separated Values) file of books
 # read details from csv file
-def readdetailsfromcsvfile(filename):
+def readDetailsFromCsvFile(file_name):
     """
         The 'readdetailsfromcsvfile' is  a user defined function that reads details from the CSV file.
-        :param filename: Name of the file
+        :param file_name: Name of the file
         :return: list of records
     """
     # declare record list
     itemlist = []
 
     try:
-        with open(filename, 'r') as f: # open file
+        with open(file_name, 'r') as f: # open file
             for line in f:
                 fields = line.rstrip('\n').split(',')
                 itemlist.append([fields[0], fields[1], fields[2], fields[3]])
     except FileNotFoundError: #error handling
-        print('Missing {} file, or missmatching file format.'.format(filename))
+        print('Missing {} file, or missmatching file format.'.format(file_name))
     import operator
     itemlist = sorted(itemlist, key=operator.itemgetter(1,2))
 
@@ -78,7 +78,7 @@ def saveDetailstoCsvFile(filename, itemlist):
 
 
 #display R - List required books
-def requiredbooks(itemlist):
+def required_books(itemlist):
     print("Required books:")
     total=0
     count=0
@@ -101,7 +101,7 @@ def requiredbooks(itemlist):
 
 
 #Display C - List completed books
-def completedbooks(itemlist):
+def completed_books(itemlist):
     print("Completed books:")
     total=0
     count=0
@@ -118,7 +118,7 @@ def completedbooks(itemlist):
 
 
 #display M - Mark a book as completed
-def markasrequired(itemlist):
+def mark_as_required(itemlist):
     count = 0
     #store itemlist to a varaible
     #check if the record book is read, then count
@@ -128,7 +128,7 @@ def markasrequired(itemlist):
 
     if count >0:
         #f the count of required books is greater than zero, then print required books
-        requiredbooks(itemlist)
+        required_books(itemlist)
 
         try:
             #ask the number of the book that needs to be changed
@@ -157,7 +157,7 @@ def markasrequired(itemlist):
 
 
 # display A - Add new book
-def addingnewbook(itemlist):
+def adding_new_book(itemlist):
     #create a new list to add the new record that needs updation in the existing file
     newitem =[]
     # read the file and store it
@@ -191,7 +191,7 @@ def addingnewbook(itemlist):
 
 # intoduction involves reading the CSV file and print the number of books loaded
 def introduction():
-    itemlist = readdetailsfromcsvfile(FILENAME)
+    itemlist = readDetailsFromCsvFile(FILENAME)
     print("{} books loaded from {}".format(len(itemlist), FILENAME))
 
 def main():
@@ -200,31 +200,31 @@ def main():
     introduction()
     added_record =[]
 
-    itemlist = readdetailsfromcsvfile(FILENAME)
+    itemlist = readDetailsFromCsvFile(FILENAME)
     while True:
 
         # print(itemlist)
-        valid_input = displaymenu()
+        valid_input = display_menu()
         #	when the user chooses list required: display a neatly formatted (lined up)
         # list of all the required books with their details and a total of the number of pages of these books
 
         if valid_input == 'R':
-            requiredbooks(itemlist)
+            required_books(itemlist)
 
         #	when the user chooses list completed: display a similarly formatted list of completed books
         elif valid_input == 'C':
-            completedbooks(itemlist)
+            completed_books(itemlist)
 
         #	when the user chooses add: prompt for the book’s title, author and number of pages,
         #   error-checking each of these, then add the book to the list in memory (not to the file)
         elif valid_input == 'A':
             #added_record =
-            addingnewbook(itemlist)
+            adding_new_book(itemlist)
             #itemlist = itemlist.append(added_record)
         #	when the user chooses mark completed: display the list of required books (same as for list)
         # then allow the user to choose one book (error-checked), then change that book to completed
         elif valid_input == 'M':
-            markasrequired(itemlist)
+            mark_as_required(itemlist)
 
         #	when the user chooses quit: save the books to the CSV file, overwriting the file contents
         else:
