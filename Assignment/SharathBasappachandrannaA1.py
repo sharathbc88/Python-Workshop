@@ -48,7 +48,7 @@ def readdetailsfromcsvfile(filename):
             for line in f:
                 fields = line.rstrip('\n').split(',')
                 itemlist.append([fields[0], fields[1], fields[2], fields[3]])
-    except FileNotFoundError:
+    except FileNotFoundError: #error handling
         print('Missing {} file, or missmatching file format.'.format(filename))
     import operator
     itemlist = sorted(itemlist, key=operator.itemgetter(1,2))
@@ -66,11 +66,11 @@ def saveDetailstoCsvFile(filename, itemlist):
         """
 
     try:
-        with open(filename, 'w') as f:
+        with open(filename, 'w') as f: # write file
             for i in range(len(itemlist)):
                 line = '{},{},{},{}\n'.format(itemlist[i][0], itemlist[i][1], itemlist[i][2], itemlist[i][3])
                 f.write(line)
-    except FileNotFoundError:
+    except FileNotFoundError: #error handling
         print('Error occurred while saving details back to {} file.\n'.format(filename))
     import operator
     itemlist = sorted(itemlist, key=operator.itemgetter(1, 2))
@@ -199,6 +199,7 @@ def main():
     print("Reading List 1.0 -by Sharath Basappa Chandranna")
     introduction()
     added_record =[]
+
     itemlist = readdetailsfromcsvfile(FILENAME)
     while True:
 
@@ -206,6 +207,7 @@ def main():
         valid_input = displaymenu()
         #	when the user chooses list required: display a neatly formatted (lined up)
         # list of all the required books with their details and a total of the number of pages of these books
+
         if valid_input == 'R':
             requiredbooks(itemlist)
 
