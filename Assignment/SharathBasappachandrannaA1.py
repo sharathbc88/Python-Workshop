@@ -1,3 +1,17 @@
+"""
+name: Sharath Basappa Chandranna
+date: 1/4/2017
+brief program details: This program is a simple reading list that allows a user to track books they wish to read and books
+                        they have completed reading. The program maintains a list of books in a file, and each book has:
+                        •	title, author, number of pages, whether it is required or completed (r or c)
+                        Users can choose to see the list of required books or completed books, including a total of the number
+                         of pages of the book list. The lists will be sorted by author then by number of pages (increasing).
+                        Users can add new books and mark books as completed.
+                        They cannot change books from completed to required.
+link to my project on GitHub: https://github.com/sharathbc88/CP5632_Workshop/tree/master/Assignment
+"""
+
+
 # name of the CSV file stored in a constant
 FILENAME = 'Books.csv'
 
@@ -64,12 +78,12 @@ def saveDetailstoCsvFile(filename, itemlist):
 
 
 #display R - List required books
-def requiredbooks():
+def requiredbooks(itemlist):
     print("Required books:")
     total=0
     count=0
     #store item list to a varaible
-    itemlist = readdetailsfromcsvfile(FILENAME)
+
     #Display requiredbooks
     for i in range(len(itemlist)):
         if 'r' in itemlist[i][3]:
@@ -87,12 +101,12 @@ def requiredbooks():
 
 
 #Display C - List completed books
-def completedbooks():
+def completedbooks(itemlist):
     print("Completed books:")
     total=0
     count=0
     # store itemlist to the variable
-    itemlist = readdetailsfromcsvfile(FILENAME)
+
     #display completed books
     for i in range(len(itemlist)):
         if 'c' in itemlist[i][3]:
@@ -104,10 +118,9 @@ def completedbooks():
 
 
 #display M - Mark a book as completed
-def markasrequired():
+def markasrequired(itemlist):
     count = 0
     #store itemlist to a varaible
-    itemlist = readdetailsfromcsvfile(FILENAME)
     #check if the record book is read, then count
     for i in range(len(itemlist)):
         if 'r' in itemlist[i][3]:
@@ -115,7 +128,7 @@ def markasrequired():
 
     if count >0:
         #f the count of required books is greater than zero, then print required books
-        requiredbooks()
+        requiredbooks(itemlist)
 
         try:
             #ask the number of the book that needs to be changed
@@ -137,18 +150,17 @@ def markasrequired():
             print("That book is already completed")
         elif 'c' not in itemlist[record_number][3]:
             itemlist[record_number][3]='c'
-            saveDetailstoCsvFile(FILENAME, itemlist)
             print("{} by {} marked as completed".format(itemlist[record_number][0],itemlist[record_number][0]))
 
     else:
         print("No required books") # there is no required books to be completed
 
+
 # display A - Add new book
-def addingnewbook():
+def addingnewbook(itemlist):
     #create a new list to add the new record that needs updation in the existing file
     newitem =[]
     # read the file and store it
-    itemlist = readdetailsfromcsvfile(FILENAME)
     # add title and check for errors
     title = str(input("Title:"))
     while title == '':
@@ -168,7 +180,6 @@ def addingnewbook():
                 pages = int(input("Pages:"))
             newitem = [title,author,pages,'r']
             #update the new item to the existing list only to the memory but not to the file
-            itemlist.append(newitem)
 
             print("{} by {}, ({} pages) added to the reading list".format(title,author,pages))
             break
@@ -176,7 +187,7 @@ def addingnewbook():
         except ValueError:
             print("Invalid input; enter a valid number")
             continue
-    return newitem
+    itemlist = itemlist.append(newitem)
 
 # intoduction involves reading the CSV file and print the number of books loaded
 def introduction():
@@ -188,33 +199,40 @@ def main():
     print("Reading List 1.0 -by Sharath Basappa Chandranna")
     introduction()
     added_record =[]
-
+    itemlist = readdetailsfromcsvfile(FILENAME)
     while True:
+
+        # print(itemlist)
         valid_input = displaymenu()
         #	when the user chooses list required: display a neatly formatted (lined up)
         # list of all the required books with their details and a total of the number of pages of these books
         if valid_input == 'R':
-            requiredbooks()
+            requiredbooks(itemlist)
 
         #	when the user chooses list completed: display a similarly formatted list of completed books
         elif valid_input == 'C':
-            completedbooks()
+            completedbooks(itemlist)
 
+        #	when the user chooses add: prompt for the book’s title, author and number of pages,
+        #   error-checking each of these, then add the book to the list in memory (not to the file)
         elif valid_input == 'A':
-            added_record = addingnewbook()
-
+            #added_record =
+            addingnewbook(itemlist)
+            #itemlist = itemlist.append(added_record)
+        #	when the user chooses mark completed: display the list of required books (same as for list)
+        # then allow the user to choose one book (error-checked), then change that book to completed
         elif valid_input == 'M':
-            markasrequired()
+            markasrequired(itemlist)
+
+        #	when the user chooses quit: save the books to the CSV file, overwriting the file contents
         else:
-            itemlist = readdetailsfromcsvfile(FILENAME)
-            itemlist.append(added_record)
             saveDetailstoCsvFile(FILENAME, itemlist)
             print("{} books saved to {}".format(len(itemlist), FILENAME))
             print("Have a nice day :)")
             break
 
-print(readdetailsfromcsvfile.__doc__)
-print(saveDetailstoCsvFile.__doc__)
+#print(readdetailsfromcsvfile.__doc__)
+#print(saveDetailstoCsvFile.__doc__)
 main()
 
 
